@@ -1,0 +1,32 @@
+# Node has a non-blocking I/O
+
+ it can run things concurrently using event loop. A regisry for
+ work that handles requests and calls a function that tells us
+ it's done.
+ 
+# Node RELP (Read-Eval-Print_loop)
+
+ basicaly a console like in browser, you can acess it typing node
+ 
+# Process and Environment
+
+ Node runs in operating system unlike javasript. So it contains process object.
+ 
+ 1. process
+ 
+    contains argv, it contains the parameters when a node file is run
+    argv[0] is the instance of Node
+	argv[1] is the file
+	argv[2-n] are the parameters 
+	
+	so node index.js 1, 2, 3
+	
+	has arg[2] == 1;
+	
+ 2. env
+  
+    environment variables from the system. So you can inject variables
+	if you want to be safe.
+	
+	
+    
