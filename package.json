@@ -1,5 +1,8 @@
 {
   "name": "intro_into_node",
+  "bin": {
+    "note": "./index.js"
+  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
