@@ -28,5 +28,27 @@
     environment variables from the system. So you can inject variables
 	if you want to be safe.
 	
-	
+# start program
+ 
+ run npm init --y
+ 
+ this will add a package.json file to project
+ 
+# init cli
+
+ 1. add a bin to package.json, that is a object containing the cli name 
+ and the file that will be run
+ 
+ "bin": {
+    "note": "./index.js"
+  }
+  
+  2. run npm link that creates a symlink from the the operating system
+  to our js code. 
+  
+  3. add a hashbang that tells the file to entepreter the environment as javasript
+     #!/usr/bin/env node
+	 
+
+  
     
