@@ -14,7 +14,7 @@ export const saveDB = async (db) => {
     return db;
 }
 
-export const appendDB = async (note) => {
+export const insertDB = async (note) => {
     const db = getDB();
 
     db.notes.push(note);
