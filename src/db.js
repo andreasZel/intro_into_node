@@ -1,6 +1,8 @@
-import fs from 'nnode:fs/promises';
+import fs from 'node:fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const DB_PATH = path.join("..", "db.json");
+const DB_PATH = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../db.json');
 
 export const getDB = async () => {
     const db = await fs.readFile(DB_PATH, 'utf-8');
@@ -15,7 +17,7 @@ export const saveDB = async (db) => {
 }
 
 export const insertDB = async (note) => {
-    const db = getDB();
+    const db = await getDB();
 
     db.notes.push(note);
     await saveDB(db)
