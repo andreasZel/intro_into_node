@@ -1,5 +1,6 @@
 {
   "name": "intro_into_node",
+  "type": "module",
   "bin": {
     "note": "./index.js"
   },
