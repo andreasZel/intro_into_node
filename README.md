@@ -122,8 +122,7 @@ locks the verions of all things we install with npms
    when creating a command you can also tell it the type of argument passed
    whith the first passed function:
 
-   `
-   yargs(hideBin(process.argv))
+   `yargs(hideBin(process.argv))
    .command('new <note>', 'create a new note', (yargs) => {
    return yargs.positional('note', {
    type: 'string',
@@ -134,8 +133,7 @@ locks the verions of all things we install with npms
 
    })
    .demandCommand(1)
-   .parse()
-   `
+   .parse()`
 
    you can also give it optional params
 
