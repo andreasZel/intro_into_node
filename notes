@@ -49,6 +49,56 @@
   3. add a hashbang that tells the file to entepreter the environment as javasript
      #!/usr/bin/env node
 	 
+# modules basically isolates code like an IIFE
 
+   (() => {
+	 console.log();
+   })()
   
-    
+  it can be a file, package ex
+  to enable module behaviour of es6, you add "type" : "module" in package.json
+  
+  1. in es6:
+  
+   export const var = 2;
+  
+   import { var } from './file.js'
+  
+  2. in commonjs
+
+   const var = 2;
+   
+   module.exports = {
+	var
+   }
+  
+   const { var } = require('./file.js')
+   
+# using index.js
+
+ you can export multiple things from files using index.js acting as a module router
+ 
+ so if we had a project with a folder utils, that has multiple js files
+ 
+ project
+  utils
+   index.js
+   utils.js
+   otherUtils.js
+  src
+   index.js
+
+ we can import everything in utils/index.js and export them from there in src/index.js
+
+ 1. utils/index.js
+	
+	export { fun1, fun2 } from './utils.js'
+	export { var } from './otherUtils.js'
+	
+ 2. src/index.js
+ 
+    import * as utils from '../utils'
+	
+# package.lock.json
+
+ locks the verions of all things we install with npms
