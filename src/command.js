@@ -1,6 +1,15 @@
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { getAllNotes, newNote, removeAllNotes, findNotes } from './notes.js';
+import { getAllNotes, newNote, removeAllNotes, deleteNote, findNotes } from './notes.js';
+
+const listNotes = (notes) => {
+    notes.forEach(note => {
+        console.log('\n')
+        console.log('id: ', note.id)
+        console.log('tags: ', note.tags.join(', ')),
+            console.log('note: ', note.content)
+    })
+}
 
 yargs(hideBin(process.argv))
     .command('new <note>', 'create a new note', yargs => {
@@ -21,7 +30,8 @@ yargs(hideBin(process.argv))
         description: 'tags to add to the note'
     })
     .command('all', 'get all notes', () => { }, async (argv) => {
-
+        const notes = await getAllNotes();
+        listNotes(notes);
     })
     .command('find <filter>', 'get matching notes', yargs => {
         return yargs.positional('filter', {
@@ -29,7 +39,9 @@ yargs(hideBin(process.argv))
             type: 'string'
         })
     }, async (argv) => {
+        const matches = await findNotes(argv.filter);
 
+        listNotes(matches);
     })
     .command('remove <id>', 'remove a note by id', yargs => {
         return yargs.positional('id', {
@@ -37,7 +49,8 @@ yargs(hideBin(process.argv))
             description: 'The id of the note you want to remove'
         })
     }, async (argv) => {
-
+        const id = await deleteNote(argv.id);
+        console.log(id ? `deleted ${id}` : `note with id: ${id} does not exist`)
     })
     .command('web [port]', 'launch website to see notes', yargs => {
         return yargs
@@ -50,7 +63,8 @@ yargs(hideBin(process.argv))
 
     })
     .command('clean', 'remove all notes', () => { }, async (argv) => {
-
+        await removeAllNotes();
+        console.log('Removed all notes')
     })
     .demandCommand(1)
     .parse()
