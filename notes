@@ -99,6 +99,106 @@
  
     import * as utils from '../utils'
 	
+# import a file to just execute the file
+
+ import './file.js';
+ 
+ you can include the hashbang only in the entry file
+	
 # package.lock.json
 
  locks the verions of all things we install with npms
+ 
+# yarg 
+
+  1. hidebin() -> skips the first two arguments
+  2. command() -> does a command like npm ...
+      demandCommand(n) -> requires at least n arguments
+	
+     when creating a command you can also tell it the type of argument passed
+	 whith the first passed function:
+	 
+	  yargs(hideBin(process.argv))
+      .command('new <note>', 'create a new note', (yargs) => {
+        return yargs.positional('note', {
+            type: 'string',
+            description: 'The content of note to be created'
+        })
+       }, (argv) => {
+        console.log(argv.note);
+
+       })
+       .demandCommand(1)
+       .parse()
+	   
+	  you can also give it optional params 
+	  
+	   .option('tags', {
+         alias: 't',
+         type: 'string',
+         describe: 'tags to add to the note'
+        })
+	   
+	  you could also make default args optional and have default values
+	  you do that with [] and default in first function
+	  
+	   .command('web [port]', 'launch website to see notes', yargs => {
+        return yargs
+            .positional('port', {
+                describe: 'port to bind on',
+                default: 5000,
+                type: 'number'
+            })
+        }, async (argv) => {
+
+        })
+		
+# Promise instead of callbacks 
+
+  you can chain functions with promises intead of calling callbacks on end
+  
+  1. with callbakcs 
+  
+    const waitAndRun = (time, cb) => {
+  
+	 setTimeout(() => {
+	 	cb();
+	 }, time)
+    }
+  
+   so you would do 
+  
+    waitAndRun(1000, () => {
+	  console.log(1000, "passed");
+	  waitAndRun(1000, () => {
+	
+	  })
+    })
+  
+  2. with promises
+  
+   const waitAndRun = (time, cb) => {
+     return new Promise((reject, resolve) => {
+        try {
+            setTimeout(() => {
+                cb();
+                resolve();
+            }, time)
+        } catch (e) {
+            reject(e)
+        }
+     })
+	}
+
+  
+   so you can chain them
+   
+    waitAndRun(1000, () => { console.log("1s passed") }).catch((e) => { })
+    .then(() => {
+        return waitAndRun(1000, () => { console.log("1s passed") }).catch((e) => { })
+    })
+    .then(() => {
+        return waitAndRun(1000, () => { console.log("1s passed") }).catch((e) => { })
+    })
+  
+    # node has async by default, you can await directly
