@@ -250,8 +250,15 @@ you used to be able to use `__dirname` to get the file you are in form the code,
 now you need to create it or create the path yourself
 
 ```Javascript
-  const pjsonPath = new URL('./package.json', import.meta.url).pathname
+  const pjsonPath = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  './package.json'
+);
 ```
+
+1. `fileURLToPath`: Converts import.meta.url to a file system path.
+2. `path.dirname`: Gets the directory name from the resolved path.
+3. `path.resolve`: Joins paths in a cross-platform compatible way.
 
 `readfile()` is a non blocking method that needs a callback, but if you import fs from `'fs/promises'`,
 it does not, so you can do
