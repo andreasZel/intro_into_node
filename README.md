@@ -209,4 +209,14 @@ return waitAndRun(1000, () => { console.log("1s passed") }).catch((e) => { })
 return waitAndRun(1000, () => { console.log("1s passed") }).catch((e) => { })
 })
 ```
-node has async by default, you can await directly`
+node has async by default, you can await directly
+
+One of the most commonly used methods in the FS module is the `fs.readFile()` method, which reads the content of a file asynchronously and returns its content in a callback function. Another popular method is `fs.writeFile()`, which writes data to a file asynchronously.
+
+Other frequently used methods include:
+
+- `fs.mkdir()` to create a new directory
+- `fs.readdir()` to read the contents of a directory
+- `fs.stat()` to get information about a file
+- `fs.unlink()` to delete a file
+- `fs.rename()` to rename a file
