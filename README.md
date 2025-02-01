@@ -64,19 +64,19 @@ to enable module behaviour of es6, you add "type" : "module" in package.json
 
 1. in es6:
 
-`export const var = 2;
+export const var = 2;
 
-import { var } from './file.js'`
+import { var } from './file.js'
 
 2. in commonjs
 
-`const var = 2;
+const var = 2;
 
 module.exports = {
 var
 }
 
-const { var } = require('./file.js')`
+const { var } = require('./file.js')
 
 # using index.js
 
@@ -122,7 +122,7 @@ locks the verions of all things we install with npms
    when creating a command you can also tell it the type of argument passed
    whith the first passed function:
 
-   `yargs(hideBin(process.argv))
+   yargs(hideBin(process.argv))
    .command('new <note>', 'create a new note', (yargs) => {
    return yargs.positional('note', {
    type: 'string',
@@ -133,20 +133,20 @@ locks the verions of all things we install with npms
 
    })
    .demandCommand(1)
-   .parse()`
+   .parse()
 
    you can also give it optional params
 
-   `.option('tags', {
-alias: 't',
-type: 'string',
-describe: 'tags to add to the note'
-})`
+   .option('tags', {
+   alias: 't',
+   type: 'string',
+   describe: 'tags to add to the note'
+   })
 
    you could also make default args optional and have default values
    you do that with [] and default in first function
 
-   `.command('web [port]', 'launch website to see notes', yargs => {
+   .command('web [port]', 'launch website to see notes', yargs => {
    return yargs
    .positional('port', {
    describe: 'port to bind on',
@@ -155,7 +155,7 @@ describe: 'tags to add to the note'
    })
    }, async (argv) => {
 
-   })`
+   })
 
 # Promise instead of callbacks
 
@@ -163,21 +163,21 @@ you can chain functions with promises intead of calling callbacks on end
 
 1. with callbakcs
 
-` const waitAndRun = (time, cb) => {
+const waitAndRun = (time, cb) => {
 
 setTimeout(() => {
 cb();
 }, time)
-}`
+}
 
 so you would do
 
-` waitAndRun(1000, () => {
+waitAndRun(1000, () => {
 console.log(1000, "passed");
 waitAndRun(1000, () => {
 
       })
-    })`
+    })
 
 2. with promises
 
@@ -196,7 +196,7 @@ reject(e)
 
 so you can chain them
 
-` waitAndRun(1000, () => { console.log("1s passed") }).catch((e) => { })
+waitAndRun(1000, () => { console.log("1s passed") }).catch((e) => { })
 .then(() => {
 return waitAndRun(1000, () => { console.log("1s passed") }).catch((e) => { })
 })
