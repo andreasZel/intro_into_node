@@ -33,16 +33,19 @@ Node runs in operating system unlike javasript. So it contains process object.
     if you want to be safe.
 
 # start program
+
 ```Javascript
 run npm init --y
 ```
+
 this will add a package.json file to project
 
 # init cli
 
 1.  add a bin to package.json, that is a object containing the cli name
     and the file that will be run
-   ```Javascript
+
+```Javascript
 "bin": {
 "note": "./index.js"
 }
@@ -55,6 +58,7 @@ this will add a package.json file to project
     #!/usr/bin/env node
 
 # modules basically isolates code like an IIFE
+
 ```Javascript
 (() => {
 console.log();
@@ -65,6 +69,7 @@ it can be a file, package ex
 to enable module behaviour of es6, you add "type" : "module" in package.json
 
 1. in es6:
+
 ```Javascript
 export const var = 2;
 
@@ -80,6 +85,7 @@ var
 
 const { var } = require('./file.js')
 ```
+
 # using index.js
 
 you can export multiple things from files using index.js acting as a module router
@@ -97,19 +103,24 @@ so if we had a project with a folder utils, that has multiple js files
 we can import everything in utils/index.js and export them from there in src/index.js
 
 1.  utils/index.js
+
 ```Javascript
 export { fun1, fun2 } from './utils.js'
     export { var } from './otherUtils.js'
 ```
 
 2.  src/index.js
+
 ```Javascript
     import \* as utils from '../utils'
 ```
+
 # import a file to just execute the file
+
 ```Javascript
 import './file.js';
 ```
+
 you can include the hashbang only in the entry file
 
 # package.lock.json
@@ -124,6 +135,7 @@ locks the verions of all things we install with npms
 
    when creating a command you can also tell it the type of argument passed
    whith the first passed function:
+
 ```Javascript
    yargs(hideBin(process.argv))
    .command('new <note>', 'create a new note', (yargs) => {
@@ -138,7 +150,9 @@ locks the verions of all things we install with npms
    .demandCommand(1)
    .parse()
 ```
-   you can also give it optional params
+
+you can also give it optional params
+
 ```Javascript
    .option('tags', {
    alias: 't',
@@ -146,8 +160,10 @@ locks the verions of all things we install with npms
    describe: 'tags to add to the note'
    })
 ```
-   you could also make default args optional and have default values
-   you do that with [] and default in first function
+
+you could also make default args optional and have default values
+you do that with [] and default in first function
+
 ```Javascript
    .command('web [port]', 'launch website to see notes', yargs => {
    return yargs
@@ -160,11 +176,13 @@ locks the verions of all things we install with npms
 
    })
 ```
+
 # Promise instead of callbacks
 
 you can chain functions with promises intead of calling callbacks on end
 
 1. with callbakcs
+
 ```Javascript
 const waitAndRun = (time, cb) => {
 
@@ -173,7 +191,9 @@ cb();
 }, time)
 }
 ```
+
 so you would do
+
 ```Javascript
 waitAndRun(1000, () => {
 console.log(1000, "passed");
@@ -182,6 +202,7 @@ waitAndRun(1000, () => {
       })
     })
 ```
+
 2. with promises
 
 ```Javascript
@@ -200,6 +221,7 @@ reject(e)
 ```
 
 so you can chain them
+
 ```Javascript
 waitAndRun(1000, () => { console.log("1s passed") }).catch((e) => { })
 .then(() => {
@@ -209,6 +231,7 @@ return waitAndRun(1000, () => { console.log("1s passed") }).catch((e) => { })
 return waitAndRun(1000, () => { console.log("1s passed") }).catch((e) => { })
 })
 ```
+
 node has async by default, you can await directly
 
 One of the most commonly used methods in the FS module is the `fs.readFile()` method, which reads the content of a file asynchronously and returns its content in a callback function. Another popular method is `fs.writeFile()`, which writes data to a file asynchronously.
@@ -220,3 +243,37 @@ Other frequently used methods include:
 - `fs.stat()` to get information about a file
 - `fs.unlink()` to delete a file
 - `fs.rename()` to rename a file
+
+1. fs.readfile()
+
+you used to be able to use `__dirname` to get the file you are in form the code,
+now you need to create it or create the path yourself
+
+```Javascript
+  const pjsonPath = new URL('./package.json', import.meta.url).pathname
+```
+
+`readfile()` is a non blocking method that needs a callback, but if you import fs from `'fs/promises'`,
+it does not, so you can do
+
+```Javascript
+  JSON.parse(await fs.readFile(pjsonPath, 'utf-8'))
+```
+
+2. fs.writeFile()
+
+you can write file with the same way
+
+```Javascript
+ fs.writeFile(pjsonPath, 'console.log('a')')
+```
+
+# Running Things in Parallel or Serial
+
+1.  using `&` runs files in node parallel
+
+`node test.js & test2.js`
+
+2.  using `&&` run things when the privious thing is finished
+
+`node index.js && test2.js`
