@@ -284,3 +284,71 @@ you can write file with the same way
 2.  using `&&` run things when the privious thing is finished
 
 `node index.js && test2.js`
+
+# Testing with jest
+
+we can mock function with `unstable_mockModule`, it takes a dir name and
+the functions we want to mock. Once we mock them we can import the real functions
+dynamically with `await import('./file.js')`
+
+```Javascript
+
+jest.unstable_mockModule('../src/db.js', () => {
+    return {
+        insertDB: jest.fn(),
+        getDB: jest.fn(),
+        saveDB: jest.fn()
+    }
+})
+
+const { insert, getDB, saveDB } = await import('../src/db.js');
+const { newNote, getAllNotes, deleteNote } = await import('../src/notes.js');
+
+```
+
+after each test we want to clear the mock functions state, we do this with
+`beforeEach()` that runs after a test is run
+
+```Javascript
+
+beforeEach(() => {
+    insert.mockClear();
+    getDB.mockClear();
+    saveDB.mockClear();
+})
+
+```
+
+test are discribed by `test("description", callBack)`
+we use the mock functions with `.mockResolvedValue(value)` which
+returns the mocked value we pass to it, for example
+
+```Javascript
+
+jest.unstable_mockModule('../src/db.js', () => (insertDB: jest.fn()))
+
+beforeEach(() => {
+    insertDB.mockClear();
+})
+
+const { newNote } = await import('../src/notes.js');
+const { insertDB } = await import('../src/db.js');
+
+test("newNote() adds a new note and returns it", async () => {
+    const noteToAdd = {
+        content: 'test',
+        id: 1,
+        tags: ['test']
+    }
+
+    insertDB.mockResolvedValue(noteToAdd);
+    let result = await newNote(noteToAdd.content, noteToAdd.tags)
+    // id is based on Date, so mock it
+    expect({...result, id: 1}).toEqual({...noteToAdd , id: 1})
+
+})
+
+```
+
+we have to run jest script like `node --experimental-vm-modules node_modules/jest/bin/jest.js`
+to use module syntax
