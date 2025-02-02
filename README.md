@@ -352,3 +352,38 @@ test("newNote() adds a new note and returns it", async () => {
 
 we have to run jest script like `node --experimental-vm-modules node_modules/jest/bin/jest.js`
 to use module syntax
+
+# Servers in Node
+
+It's a programm that listens to network request and responds. We can create a server with
+`http` Node module.
+
+Servers listen to a req and provide a response,
+
+```Javascript
+
+server = http.createServer((req, res) => {
+
+})
+
+```
+
+1. statusCode
+
+the status code of the response
+
+2. headers
+
+headers to send, `Content-type` for example
+describes the data send with response
+
+To start the server you do `listen` providing a port, optionally
+you can install `open` module to open a browser whenever you start a server
+
+```Javascript
+
+server.listen(4000, () => {
+    console.log('Server running on localHost:4000')
+})
+
+```
